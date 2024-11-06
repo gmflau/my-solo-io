@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: Simple API
+  version: v1
+servers:
+  - url: http://simple-api-function.lambda.solo.io
+    description: Production server
+paths:
+  /Simple-API-Function-one:
+    get:
+      operationId: getSimpleApiFunctionOne
+      summary: Returns a message
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  body:
+                    oneOf:
+                      - type: string
+                      - type: object
+                        additionalProperties: true
+                required:
+                  - statusCode
+                  - body
+  /Simple-API-Function-two:
+    get:
+      operationId: getSimpleApiFunctionTwo
+      summary: Returns a message
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  body:
+                    oneOf:
+                      - type: string
+                      - type: object
+                        additionalProperties: true
+                required:
+                  - statusCode
+                  - body
