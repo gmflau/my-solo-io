@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  title: Simple API
+  version: v1
+servers:
+  - url: http://my-python-app.cloudrun.solo.io
+    description: Production server
+paths:
+  /hello:
+    get:
+      operationId: app.hello
+      summary: Returns a greeting message
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /health:
+    get:
+      operationId: app.health_check
+      summary: Returns the health status of the application
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
