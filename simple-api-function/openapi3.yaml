@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: Simple API
+  version: v1
+servers:
+  - url: http://simple-api-function.lambda.solo.io
+    description: Production server
+paths:
+  /simple-api-function-weekday:
+    get:
+      operationId: app.simple-api-function-weekday
+      summary: Returns the current weekday name
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+  /simple-api-function-day:
+    get:
+      operationId: app.simple-api-function-day
+      summary: Returns the current day of the year
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+  /simple-api-function-month:
+    get:
+      operationId: app.simple-api-function-month
+      summary: Returns the current month of the year
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+  /simple-api-function-year:
+    get:
+      operationId: app.simple-api-function-year
+      summary: Returns the current year
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
