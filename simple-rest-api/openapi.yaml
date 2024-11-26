@@ -1,0 +1,191 @@
+openapi: 3.0.0
+info:
+  title: Items API
+  version: 1.0.0
+  description: A simple CRUD API for managing items
+
+servers:
+  - url: https://lambda.example.com
+
+paths:
+  /items:
+    get:
+      summary: List all items
+      operationId: listItems
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Create a new item
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemInput'
+      responses:
+        '201':
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /items/{itemId}:
+    get:
+      summary: Get a specific item
+      operationId: getItem
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Update an existing item
+      operationId: updateItem
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemInput'
+      responses:
+        '200':
+          description: Item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Delete an item
+      operationId: deleteItem
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Item deleted successfully
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    ItemInput:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          example: "New Item"
+        description:
+          type: string
+          example: "Item description"
+
+    Item:
+      allOf:
+        - $ref: '#/components/schemas/ItemInput'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: "cb818d36-8c2d-4b1c-952c-e4c372243e9b"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Detailed error message"
