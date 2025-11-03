@@ -419,7 +419,7 @@
             "schema": {
               "title": "Q"
             },
-            "name": "q",
+            "name": "qv010",
             "in": "query"
           },
           {
